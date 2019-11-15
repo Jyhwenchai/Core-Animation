@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<playground version='6.0' target-platform='ios'>
+<playground version='6.0' target-platform='ios' display-mode='raw'>
     <pages>
-        <page name='Untitled Page'/>
-        <page name='Implicit animation'/>
-        <page name='Explicit animation'/>
-        <page name='Layer Time'/>
+        <page name='Description'/>
+        <page name='Transforms&amp;SpecializedLayers'/>
+        <page name='ImplicitAnimation'/>
+        <page name='ExplicitAnimation'/>
+        <page name='LayerTime'/>
         <page name='Easing'/>
-        <page name='Time-Based Animation'/>
-        <page name='Effect Drawing'/>
+        <page name='Time-BasedAnimation'/>
+        <page name='EffectDrawing'/>
     </pages>
 </playground>
