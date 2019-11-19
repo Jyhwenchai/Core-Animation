@@ -98,8 +98,8 @@ class Example9_2: UIView {
         let layer = CALayer()
         layer.frame = CGRect(x: 0, y: 0, width: 300, height: 500)
         layer.contents = UIImage(named: "door.png")?.cgImage
-        layer.position = CGPoint(x: bounds.midX - 150, y: bounds.midY - 100)
-        layer.anchorPoint = CGPoint(x: 0, y: 0.5)
+        layer.position = CGPoint(x: 350, y: bounds.midY - 100)
+        layer.anchorPoint = CGPoint(x: 1, y: 0.5)
         return layer
     }()
     
@@ -138,7 +138,7 @@ class Example9_2: UIView {
         // apply swinging animation
         let animation = CABasicAnimation()
         animation.keyPath = "transform.rotation.y"
-        animation.toValue = -CGFloat.pi / 2.0
+        animation.toValue = CGFloat.pi / 2.0
         animation.duration = 2.0
         animation.repeatDuration = Double.infinity
         animation.autoreverses = true
@@ -163,7 +163,6 @@ class Example9_3: UIView {
             let label = UILabel()
             label.font = UIFont.systemFont(ofSize: 12)
             label.textColor = UIColor.black
-            label.text = "0.0"
             return label
         }()
         
@@ -248,6 +247,7 @@ class Example9_3: UIView {
         control.center = CGPoint(x: self.bounds.midX, y: bounds.maxY - 140)
         control.titleLabel.text = "timeOffset"
         control.slider.value = 0.5
+        control.descLabel.text = "0.5"
         return control
     }()
     
@@ -256,6 +256,7 @@ class Example9_3: UIView {
         control.center = CGPoint(x: self.bounds.midX, y: bounds.maxY - 100)
         control.titleLabel.text = "speed"
         control.slider.value = 1.0
+        control.descLabel.text = "1.0"
         return control
     }()
     
@@ -377,7 +378,8 @@ class Example9_4: UIView {
         
         // update timeOffset and clamp result
         var timeOffset = doorLayer.timeOffset
-        timeOffset = min(0.999, max(0.9, timeOffset - Double(x)))
+        print(timeOffset)
+        timeOffset = min(1, max(0, timeOffset - Double(x)))
         doorLayer.timeOffset = timeOffset
         // reset pan gesture
         gesutre.setTranslation(CGPoint.zero, in: self)
@@ -392,6 +394,6 @@ class Example9_4: UIView {
 //
 //PlaygroundPage.current.liveView = window
 
-PlaygroundPage.current.liveView = Example9_2()
+//PlaygroundPage.current.liveView = Example9_2()
 //PlaygroundPage.current.liveView = Example9_3()
-//PlaygroundPage.current.liveView = Example9_4()
+PlaygroundPage.current.liveView = Example9_4()

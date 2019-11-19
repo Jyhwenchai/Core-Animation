@@ -221,5 +221,5 @@ class Example13_4: UIView {
 
 //PlaygroundPage.current.liveView = Example13_1()
 //PlaygroundPage.current.liveView = Example13_2()
-//PlaygroundPage.current.liveView = Example13_3()
-PlaygroundPage.current.liveView = Example13_4()
+PlaygroundPage.current.liveView = Example13_3()
+//PlaygroundPage.current.liveView = Example13_4()

@@ -42,7 +42,7 @@ class Example10_1 : UIView {
 }
 
 
-// MARK: Example10_1 - 使用UIKit动画的缓冲测试工程
+// MARK: Example10_2 - 使用UIKit动画的缓冲测试工程
 class Example10_2 : UIView {
     
     lazy var colorView: UIView = {
@@ -145,7 +145,7 @@ class Example10_4 : UIView {
         
         //create curve
         path.addCurve(to: CGPoint(x: 1, y: 1), controlPoint1: point1, controlPoint2: point2)
-        
+
         // scale the path up to a reasonable size for display
         path.apply(CGAffineTransform(scaleX: 300, y: 300))
         

@@ -131,7 +131,7 @@ class Example8_4: UIView, CAAnimationDelegate {
         let dateComponents = calendar.dateComponents(components, from: Date())
         let hourAngle = CGFloat(dateComponents.hour!) / 12.0 * CGFloat.pi * 2.0
         let minuteAngle = CGFloat(dateComponents.minute!) / 60.0 * CGFloat.pi * 2.0
-        let secondAngle = CGFloat(dateComponents.second!) / 50.0 * CGFloat.pi * 2.0
+        let secondAngle = CGFloat(dateComponents.second!) / 60.0 * CGFloat.pi * 2.0
         
         // rotate hands
         setAngle(hourAngle, handView: hourHand, animated: animated)
@@ -501,6 +501,7 @@ class Example8_11: UIView {
     
 }
 
+// MARK: Playground 无法演示该示例，需要一个 iOS 工程才可实现效果
 class Example8_12: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
@@ -630,7 +631,7 @@ class Example8_15: UIView, CAAnimationDelegate {
         button.layer.cornerRadius = 6.0
         button.layer.borderWidth = 1.0
         button.layer.borderColor = UIColor.purple.cgColor
-        button.setTitle("start", for: .normal)
+        button.setTitle("stop", for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
         button.center = CGPoint(x: bounds.midX + 70, y: bounds.maxY - 45)
         button.addTarget(self, action: #selector(stopBtnAction), for: .touchUpInside)
@@ -684,3 +685,4 @@ class Example8_15: UIView, CAAnimationDelegate {
 //PlaygroundPage.current.liveView = Example8_12()
 //PlaygroundPage.current.liveView = Example8_14()
 PlaygroundPage.current.liveView = Example8_15()
+//

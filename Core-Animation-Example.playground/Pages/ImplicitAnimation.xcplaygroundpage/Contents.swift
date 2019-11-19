@@ -3,8 +3,8 @@
 import UIKit
 import PlaygroundSupport
 
-// MARK: Example7_1 - 随机改变图层颜色
-class Example7_1: UIView {
+// MARK: Example7_2 - 使用CATransaction控制动画时间
+class Example7_2: UIView {
     
     lazy var colorLayer: CALayer = {
         let layer = CALayer()
@@ -61,8 +61,8 @@ class Example7_1: UIView {
     
 }
 
-// MARK: Example7_2 - 使用CATransaction控制动画时间
-class Example7_2: UIView {
+// MARK: Example7_3 - 使用CATransaction添加动画完成回调
+class Example7_3: UIView {
     
     lazy var colorLayer: CALayer = {
         let layer = CALayer()
@@ -305,8 +305,8 @@ class Example7_7: UIView {
 }
 
 
-//PlaygroundPage.current.liveView = Example7_1()
 //PlaygroundPage.current.liveView = Example7_2()
+//PlaygroundPage.current.liveView = Example7_3()
 //PlaygroundPage.current.liveView = Example7_4()
 //PlaygroundPage.current.liveView = Example7_6()
 PlaygroundPage.current.liveView = Example7_7()

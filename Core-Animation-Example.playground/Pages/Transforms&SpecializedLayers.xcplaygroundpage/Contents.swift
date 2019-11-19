@@ -430,6 +430,6 @@ class Example6_13: UIView {
 //PlaygroundPage.current.liveView = Example6_5()
 //PlaygroundPage.current.liveView = Example6_6()
 //PlaygroundPage.current.liveView = Example6_8()
-PlaygroundPage.current.liveView = Example6_9()
+//PlaygroundPage.current.liveView = Example6_9()
 //PlaygroundPage.current.liveView = Example6_12()
-//PlaygroundPage.current.liveView = Example6_13()
+PlaygroundPage.current.liveView = Example6_13()
