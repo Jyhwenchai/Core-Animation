@@ -197,6 +197,32 @@ example(CGRect.zero) { rootView in
     PlaygroundPage.current.liveView = rootView
 }
 
+//: performWithoutAnimation(_:)
+//: 最后这个方法将屏蔽视图的相关过渡动画, 你可以用此禁用 `UITableView` 插入删除等动画行为，另外该方法并不能使 `CALayer` 的动画失效
+example(CGRect.zero) { rootView in
+    
+    let view1 = UIView(frame: CGRect(x: 50, y: 50, width: 50, height: 50))
+    view1.backgroundColor = UIColor.orange
+    rootView.addSubview(view1)
+    
+    let view2 = UIView(frame: CGRect(x: 200, y: 50, width: 50, height: 50))
+    view2.backgroundColor = UIColor.systemTeal
+    rootView.addSubview(view2)
+    
+    let animation: UIView.SystemAnimation = .delete
+    let options: UIView.AnimationOptions = [.curveEaseIn]
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+        UIView.performWithoutAnimation {
+            UIView.perform(animation, on: [view1, view2], options: options, animations: {
+                view1.frame = CGRect(x: 50, y: 250, width: 50, height: 50)
+                view2.frame = CGRect(x: 200, y: 250, width: 50, height: 50)
+            }, completion: nil)
+        }
+    }
+    PlaygroundPage.current.liveView = rootView
+}
+
+
 //: ## 扩展阅读
 //: [View-Layer 协作](https://objccn.io/issue-12-4/)
 
