@@ -67,8 +67,13 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 //: * valueFunction - 它只对 `CATransform3D` 的变换有效（如：rotateX、rotateY、rotateZ、scale、scaleX、scaleY、scaleZ、translate、translateX、translateY、translateZ）
 
 //: #### CABasicAnimation
-//: 从 `CABasicAnimation` 开始我们可以使用它产生真正动画对象，并作用于一个图层（`CALayer`）上。再一次你可以[这里](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/AnimatableProperties/AnimatableProperties.html#//apple_ref/doc/uid/TP40004514-CH11-SW1)查看所有可动画属性。接下来将演示一些简单的动画效果
-
+//: 从 `CABasicAnimation` 开始我们可以使用它创建真正的动画对象，并作用于一个图层（`CALayer`）上。在[这里](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/AnimatableProperties/AnimatableProperties.html#//apple_ref/doc/uid/TP40004514-CH11-SW1)查看所有可动画属性。接下来将对动画中的相关属性进行说明
+//:
+//: * `fromValue` 表示动画开始前的初始位置，也就是从哪个位置开始进行动画
+//: * `toValue` 指定动画结束的位置
+//: * `byValue` 指定动画在 `fromValue` 基础上偏移的值，也就是说 `byValue = toValue - fromValue`
+//: * `duration` 指定动画执行时长
+//:
 example(CGRect.zero) { rootView in
     let animateView = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
     animateView.backgroundColor = UIColor.systemPink
@@ -79,18 +84,9 @@ example(CGRect.zero) { rootView in
     animation.toValue = 250
     animation.duration = 1.5
     animateView.layer.add(animation, forKey: nil)
-    
     PlaygroundPage.current.liveView = rootView
 }
-
-//: 运行动画前要说明用到的几个动画属性
-//:
-//: * `fromValue` 表示动画开始前的初始位置，也就是从哪个位置开始进行动画
-//: * `toValue` 指定动画结束的位置
-//: * `byValue` 指定动画在 `fromValue` 基础上偏移的值，也就是说 `byValue = toValue - fromValue`
-//: * `duration` 指定动画执行时长
-//:
-//: 最终运行后你可以看到 `animateView` 向有移动了一段距离，但是在动画结束之后又回到了开始的位置，这是因为虽然你为 `CALayer` 提供了动画，但是动画的结果并不就代表你最终所要展示的结果，所以你如果确定动画完成后的位置就是你最终的位置，那么你应该在动画完成后更新到指定位置。
+//: 运行上面的示例可以看到 `animateView` 向有移动了一段距离，但是在动画结束之后又回到了开始的位置，这是因为虽然你为 `CALayer` 提供了动画，但是动画的结果并不就代表你最终所要展示的结果，你如果确定动画完成后的位置就是你最终的位置，那么你应该在动画完成后更新到指定位置。
 public class AnimateExample01: UIView, CAAnimationDelegate {
     
     let animateView = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
@@ -156,7 +152,7 @@ example(CGRect.zero) { rootView in
 }
 
 //: * `beginTime` 指定动画相对于父图层的开始时间，你可以使用此做延迟动画,默认为0动画将立刻开始
-//: * `timeOffset` 与 `beginTime` 类似，但是它只是将动画快进到偏移的时间点然后继续动画，例如，1秒的动画你设置 `timeOffset` 为0.5，那么动画将从 0.5 秒的位置开始动画，且动画时间还是1秒
+//: * `timeOffset` 与 `beginTime` 类似，不同的是它只是将动画快进到偏移的时间点然后进行一次完整时间的动画，例如，1秒的动画你设置 `timeOffset` 为0.5，那么动画将从 0.5 秒的位置开始动画，且动画时间还是1秒
 example(CGRect.zero) { rootView in
     let animateView = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
     animateView.backgroundColor = UIColor.systemPink
@@ -173,6 +169,7 @@ example(CGRect.zero) { rootView in
     
     PlaygroundPage.current.liveView = rootView
 }
+
 //: * `speed` 可以加快时间的速度，如果你设置为2.0 `duration` 为1.0，那么时间动画完成的时间为 `duration/speed`, 也就是说0.5秒就完成了动画，它的默认为1.0
 example(CGRect.zero) { rootView in
     let animateView = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
@@ -191,9 +188,31 @@ example(CGRect.zero) { rootView in
     PlaygroundPage.current.liveView = rootView
 }
 
-//: `CAAnimation` 中有一个属性为 `timingFunction`, 它可以使你的动画表现更加平滑自然，我们可以称其为`缓冲效果`，你可以在[这里](https://zsisme.gitbooks.io/ios-/content/chapter10/animation-velocity.html)看到对 `timingFunction` 的详细介绍。
+//: * `repeatCount` 可以指定动画重复的次数,它是一个浮点数类型，所以它允许你指定类似1.5此的重复次数，这意味着动画将进行完整的一次以然后再重新开始动画到一半的地方才完成
+//: * `repeatDuration` 功能与 `repeatCount` 相同，只不过它将循环的次数转换成时间，如果你需要重复动画应该两者间取其一
+//: * `autoreverses` 表示你是否需要将动画反转，例如一个右移动画完成后它会接着左移回到最初的位置
+example(CGRect.zero) { rootView in
+    let animateView = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+    animateView.backgroundColor = UIColor.systemPink
+    rootView.addSubview(animateView)
+    
+    let animation = CABasicAnimation(keyPath: "position.x")
+    animation.fromValue = animateView.layer.position.x
+    animation.toValue = 250
+    animation.duration = 2
+    animation.fillMode = .forwards
+    animation.isRemovedOnCompletion = false
+    animation.repeatCount = 1.5
+//    animation.repeatDuration = 3
+//    animation.autoreverses = true
+    animateView.layer.add(animation, forKey: nil)
+    
+    PlaygroundPage.current.liveView = rootView
+}
+
+//: `CAAnimation` 中有一个属性 `timingFunction`, 它可以使你的动画表现更加平滑自然，我们可以称其为`缓冲效果`，你可以在[这里](https://zsisme.gitbooks.io/ios-/content/chapter10/animation-velocity.html)看到对 `timingFunction` 更详细的介绍。
 //:
-//: 系统提供了5个 `timingFunction` 值来影响动画的缓冲效果，当然你也可以自定义自己的缓冲函数 `CAMediaTimingFunction(controlPoints:)`, 缓冲函数有四个参数，分别对应着两个控制点（controlPoints: x1, y1, x2, y2）,你可以通过调整这四个参数值来实现不同的缓冲效果。你可以在[这里](https://zsisme.gitbooks.io/ios-/content/chapter10/custom-easing-functions.html)进一步的了解缓冲函数相关的知识。
+//: 系统提供了5个 `timingFunction` 值来调整动画的缓冲效果，当然你也可以自定义自己的缓冲函数 `CAMediaTimingFunction(controlPoints:)`, 缓冲函数有四个参数，分别对应着两个控制点（controlPoints: x1, y1, x2, y2）,你可以通过调整这四个参数值来实现不同的缓冲效果。你可以在[这里](https://zsisme.gitbooks.io/ios-/content/chapter10/custom-easing-functions.html)进一步的了解缓冲函数相关的知识。也可以使用[缓冲曲线查看器](https://github.com/YouXianMing/Tween-o-Matic-CN)来动态观察缓冲曲线。
 example(CGRect.zero) { rootView in
     let animateView = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
     animateView.backgroundColor = UIColor.systemPink
@@ -212,8 +231,12 @@ example(CGRect.zero) { rootView in
     PlaygroundPage.current.liveView = rootView
 }
 
+//: ### 小结
+//: * 这里简单介绍了 `CALayer` 中 `frame`、`bounds`、`position`、`anchorPoint` 等属性已经他们之间的区别及当调整 `anchorPoint` 后的计算方式，这是动画开始前重要的一部分。
+//: * 对于动画相关的协议及相关类这里介绍了 `CAMediaTiming` 的各个动画属性, `CAAnimation` 中的缓冲函数以及 `CABasicAnimation` 的插值，我们应该理解他们的使用方式。
+
 //: ### 说明
-//: iOS-Core-Animation-Advanced-Techniques 书籍相关的示例代码可以[在此查看](https://github.com/Jyhwenchai/Core-Animation-Example/tree/master/Core-Animation-Example.playground)，你可以找对对应章节查看对应的代码，包括`缓冲函数`的示例等。
+//: iOS-Core-Animation-Advanced-Techniques 书籍相关的示例代码可以[在此查看](https://github.com/Jyhwenchai/Core-Animation-Example/tree/master/Core-Animation-Example.playground)，你可以找到对应章节查看对应的代码，包括`缓冲函数`的示例等。
 
 //: ### 参考列表
 //: [valueFunction](https://www.xuzhengke.cn/archives/708)
