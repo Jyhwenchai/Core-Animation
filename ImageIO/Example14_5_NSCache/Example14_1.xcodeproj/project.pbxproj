@@ -12,7 +12,7 @@
 		183AAA7823291DDE00678AE8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 183AAA7623291DDE00678AE8 /* Main.storyboard */; };
 		183AAA7A23291DE100678AE8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 183AAA7923291DE100678AE8 /* Assets.xcassets */; };
 		183AAA7D23291DE100678AE8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 183AAA7B23291DE100678AE8 /* LaunchScreen.storyboard */; };
-		183AAAAA2329321300678AE8 /* large photos in Resources */ = {isa = PBXBuildFile; fileRef = 183AAAA92329321300678AE8 /* large photos */; };
+		661EED35238BDE7500CFD95A /* large photos in Resources */ = {isa = PBXBuildFile; fileRef = 661EED34238BDE7500CFD95A /* large photos */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,7 +23,7 @@
 		183AAA7923291DE100678AE8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		183AAA7C23291DE100678AE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		183AAA7E23291DE100678AE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		183AAAA92329321300678AE8 /* large photos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "large photos"; sourceTree = "<group>"; };
+		661EED34238BDE7500CFD95A /* large photos */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "large photos"; path = "../../large photos"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,13 +56,13 @@
 		183AAA6F23291DDE00678AE8 /* Example14_1 */ = {
 			isa = PBXGroup;
 			children = (
+				661EED34238BDE7500CFD95A /* large photos */,
 				183AAA7023291DDE00678AE8 /* AppDelegate.swift */,
 				183AAA7423291DDE00678AE8 /* ViewController.swift */,
 				183AAA7623291DDE00678AE8 /* Main.storyboard */,
 				183AAA7923291DE100678AE8 /* Assets.xcassets */,
 				183AAA7B23291DE100678AE8 /* LaunchScreen.storyboard */,
 				183AAA7E23291DE100678AE8 /* Info.plist */,
-				183AAAA92329321300678AE8 /* large photos */,
 			);
 			path = Example14_1;
 			sourceTree = "<group>";
@@ -125,7 +125,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				183AAAAA2329321300678AE8 /* large photos in Resources */,
+				661EED35238BDE7500CFD95A /* large photos in Resources */,
 				183AAA7D23291DE100678AE8 /* LaunchScreen.storyboard in Resources */,
 				183AAA7A23291DE100678AE8 /* Assets.xcassets in Resources */,
 				183AAA7823291DDE00678AE8 /* Main.storyboard in Resources */,

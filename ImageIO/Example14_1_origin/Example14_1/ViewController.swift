@@ -11,7 +11,6 @@ import UIKit
 class ViewController: UICollectionViewController {
     
     var imagePaths: [String] {
-//        let paths = Bundle.main.paths(forResourcesOfType: "jpg", inDirectory: "large photos")
         let paths = ["https://cdn.pixabay.com/photo/2017/03/01/04/22/santa-cruz-2107464_1280.jpg",
                      "https://image.shutterstock.com/image-photo/santa-cruz-breakwater-lighthouse-california-600w-268577519.jpg",
                      "https://image.shutterstock.com/image-photo/usasanta-cruznatural-bridges-state-beach-600w-101070745.jpg"]
