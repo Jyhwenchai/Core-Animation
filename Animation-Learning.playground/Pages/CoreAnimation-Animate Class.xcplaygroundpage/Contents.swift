@@ -7,17 +7,17 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 
 /*:
  
-                             ┌──────────────────────────────────┐
-                             │    CAAction   |  CAMediaTiming   │
-                             └───────────────┬──────────────────┘
-                                             │
-                                   ┌─────────┴─────────┐
-                                   │    CAAnimation    │
-                                   └─────────┬─────────┘
-                                             │
-                      ┌──────────────────────┴───────────────────────┐
-                      │    CAPropertyAnimation | CAAnimationGroup    │
-                      └────────────┬─────────────────────────────────┘
+                                     ┌──────────────────────────────────┐
+                                     │    CAAction   |  CAMediaTiming   │
+                                     └───────────────┬──────────────────┘
+                                                     │
+                                           ┌─────────┴─────────┐
+                                           │    CAAnimation    │
+                                           └─────────┬─────────┘
+                                                     │
+                      ┌──────────────────────────────┴──────────────────────────────┐
+                      │    CAPropertyAnimation | CAAnimationGroup | CATransition    │
+                      └────────────┬────────────────────────────────────────────────┘
                                    │
           ┌────────────────────────┴────────────────────────┐
           │    CABasicAnimation    |  CAKeyframeAnimation   │
@@ -26,7 +26,7 @@ PlaygroundPage.current.needsIndefiniteExecution = true
           ┌────────────┴───────────┐
           │    CASpringAnimation   │
           └────────────────────────┘
-
+ 
 */
 //: 在第一部分中我们通过 `CABasicAnimation` 了解了动画相关属性的使用，现在我们将继续学习剩余的动画类的使用。
 
@@ -370,5 +370,37 @@ public class SpringAnimation: UIView {
     }
 }
 PlaygroundPage.current.liveView = SpringAnimation()
+
+//: ## CATransition
+//: `CATransition` 为图层的的过渡提供了动画效果。`startProgress` 和 `endProgress` 通过 `duration` 计算得到一个相对的完整动画的开始位置和结束位置，其取值范围是0到1，且 `endProgress` 应该总大于等于 `startProgress`。`type` 定义的了动画过渡的主要方式，`subType` 定义了动画过渡的方向
+example(CGRect.zero) { rootView in
+    let transitioningLayer = CATextLayer()
+    transitioningLayer.frame = CGRect(x: 50, y: 10,
+                                      width: 220, height: 160)
+    
+    rootView.layer.addSublayer(transitioningLayer)
+    
+    transitioningLayer.backgroundColor = UIColor.red.cgColor
+    transitioningLayer.string = "Red"
+    
+    func runTransition() {
+        let transition = CATransition()
+        transition.duration = 2
+        transition.type = .push
+        transition.subtype = .fromLeft
+        transition.startProgress = 0.3
+        transition.endProgress = 0.9
+        transitioningLayer.add(transition, forKey: "transition")
+        
+        transitioningLayer.backgroundColor = UIColor.blue.cgColor
+        transitioningLayer.string = "Blue"
+    }
+    
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+        runTransition()
+    }
+    PlaygroundPage.current.liveView = rootView
+}
+
 //: [Next](@next)
 

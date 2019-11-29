@@ -2,7 +2,9 @@
 <playground version='6.0' target-platform='ios' display-mode='raw'>
     <pages>
         <page name='UIViewAnimation'/>
-        <page name='CoreAnimation一'/>
-        <page name='CoreAnimation二'/>
+        <page name='CoreAnimation-Basic'/>
+        <page name='CoreAnimation-Animate Class'/>
+        <page name='CoreAnimation-CAAction'/>
+        <page name='CoreAnimation-CATransaction'/>
     </pages>
 </playground>

@@ -38,17 +38,17 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 //:
 /*:
  
-                             ┌──────────────────────────────────┐
-                             │    CAAction   |  CAMediaTiming   │
-                             └───────────────┬──────────────────┘
-                                             │
-                                   ┌─────────┴─────────┐
-                                   │    CAAnimation    │
-                                   └─────────┬─────────┘
-                                             │
-                      ┌──────────────────────┴───────────────────────┐
-                      │    CAPropertyAnimation | CAAnimationGroup    │
-                      └────────────┬─────────────────────────────────┘
+                                     ┌──────────────────────────────────┐
+                                     │    CAAction   |  CAMediaTiming   │
+                                     └───────────────┬──────────────────┘
+                                                     │
+                                           ┌─────────┴─────────┐
+                                           │    CAAnimation    │
+                                           └─────────┬─────────┘
+                                                     │
+                      ┌──────────────────────────────┴──────────────────────────────┐
+                      │    CAPropertyAnimation | CAAnimationGroup | CATransition    │
+                      └────────────┬────────────────────────────────────────────────┘
                                    │
           ┌────────────────────────┴────────────────────────┐
           │    CABasicAnimation    |  CAKeyframeAnimation   │
@@ -238,7 +238,7 @@ example(CGRect.zero) { rootView in
 //: ### 说明
 //: iOS-Core-Animation-Advanced-Techniques 书籍相关的示例代码可以[在此查看](https://github.com/Jyhwenchai/Core-Animation-Example/tree/master/Core-Animation-Example.playground)，你可以找到对应章节查看对应的代码，包括`缓冲函数`的示例等。
 
-//: ### 参考列表
+//: ### 参考
 //: [valueFunction](https://www.xuzhengke.cn/archives/708)
 //:
 //: [fillMode](https://www.jianshu.com/p/91fccd32f6fb)
