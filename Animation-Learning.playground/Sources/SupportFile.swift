@@ -28,3 +28,9 @@ public func example(_ frame: CGRect, action: (_ view: UIView) -> ()) -> UIView {
     }
     return animateView
 }
+
+public func example(action: ()->()) {
+    action()
+}
+
+
