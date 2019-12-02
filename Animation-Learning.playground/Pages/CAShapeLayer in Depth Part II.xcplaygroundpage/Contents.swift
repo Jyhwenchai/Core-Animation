@@ -236,3 +236,184 @@ example(CGRect.zero) { rootView in
     
     PlaygroundPage.current.liveView = rootView
 }
+//: ### Line Width
+//: `lineWidth` 是另外一个简单的动画属性：
+example(CGRect.zero) { rootView in
+    
+    let shapeLayer = CAShapeLayer()
+    shapeLayer.bounds = CGRect(x: 0, y: 0, width: 120, height: 120)
+    shapeLayer.strokeColor = UIColor.red.cgColor
+    shapeLayer.lineWidth = 0.0
+    shapeLayer.fillColor = nil
+    
+    let arcCenter = shapeLayer.position
+    let radius = shapeLayer.bounds.size.width / 2.0
+    let startAnigle = CGFloat(0)
+    let endAngle = CGFloat.pi * 2
+    let closewise = true
+    
+    shapeLayer.path = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: startAnigle, endAngle: endAngle, clockwise: closewise).cgPath
+    rootView.layer.addSublayer(shapeLayer)
+    shapeLayer.position = rootView.layer.position
+    
+    func executeAnimate() {
+        let animation = CABasicAnimation(keyPath: "lineWidth")
+        animation.byValue = 10.0
+        animation.duration = 1.5
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+        animation.repeatCount = .infinity
+        animation.autoreverses = true
+        shapeLayer.add(animation, forKey: nil)
+    }
+    
+    executeAnimate()
+    
+    PlaygroundPage.current.liveView = rootView
+}
+//: ### Miter Limit
+//: 在所有可动画属性中 `miterLimit` 是最令人困惑的。虽然文档中把它标志为可动画的属性，当似乎当我们以动画的方式改变他的值时并不会呈现良好的动画效果，而是立刻的发生变化。
+example(CGRect(x: 0, y: 0, width: 400, height: 400)) { rootView in
+    
+    func shapeLayerWithdifferentMiter(miter: CGFloat, position: CGPoint) -> CAShapeLayer {
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        shapeLayer.lineWidth = 8.0
+        shapeLayer.strokeColor = UIColor.systemPink.cgColor
+        shapeLayer.fillColor = nil
+        shapeLayer.lineJoin = .miter
+        shapeLayer.miterLimit = miter
+        shapeLayer.path = createStarPath(shapeLayer.position).cgPath
+        shapeLayer.position = position
+        return shapeLayer
+    }
+    
+    
+    let shapeLayer = shapeLayerWithdifferentMiter(miter: 10.0, position: CGPoint(x: 60, y: 60))
+    shapeLayer.position = rootView.layer.position
+    rootView.layer.addSublayer(shapeLayer)
+    
+    func executeAnimate() {
+        let animation = CABasicAnimation(keyPath: "miterLimit")
+        animation.toValue = 0
+        animation.duration = 1.75
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+        animation.repeatCount = .infinity
+        animation.autoreverses = true
+        shapeLayer.add(animation, forKey: nil)
+    }
+    
+    executeAnimate()
+
+    PlaygroundPage.current.liveView = rootView
+}
+//: ### Stroke Color
+//: 类似于 `fillColor`，`strokeColor` 的动画实现很简单：
+example(CGRect.zero) { rootView in
+    
+    let shapeLayer = CAShapeLayer()
+    shapeLayer.bounds = CGRect(x: 0, y: 0, width: 120, height: 120)
+    shapeLayer.strokeColor = UIColor.red.cgColor
+    shapeLayer.lineWidth = 5.0
+    shapeLayer.fillColor = nil
+    
+    let arcCenter = shapeLayer.position
+    let radius = shapeLayer.bounds.size.width / 2.0
+    let startAnigle = CGFloat(0)
+    let endAngle = CGFloat.pi * 2
+    let closewise = true
+    
+    shapeLayer.path = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: startAnigle, endAngle: endAngle, clockwise: closewise).cgPath
+    rootView.layer.addSublayer(shapeLayer)
+    shapeLayer.position = rootView.layer.position
+    
+    func executeAnimate() {
+        let animation = CABasicAnimation(keyPath: "strokeColor")
+        animation.toValue = UIColor.blue.cgColor
+        animation.duration = 1.5
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+        animation.repeatCount = .infinity
+        animation.autoreverses = true
+        shapeLayer.add(animation, forKey: nil)
+    }
+    
+    executeAnimate()
+    
+    PlaygroundPage.current.liveView = rootView
+}
+
+//: Stroke Start and End
+//: 一对非常有用的可动画属性：`strokeStart` 和 `strokeEnd`。两者都表示沿总路径长度的相对点，定义为0.0到1.0之间的分数，其中0.0表示路径的起点，而1.0表示路径的终点。路径的可见部分始终是 `strokeEnd` 和 `strokeStart` 之间的差值。
+//:
+//: 从0.0到1.0对 `strokeEnd` 进行动画处理通常用于“绘制”路径：
+example(CGRect.zero) { rootView in
+    
+    let shapeLayer = CAShapeLayer()
+    shapeLayer.bounds = CGRect(x: 0, y: 0, width: 120, height: 120)
+    shapeLayer.strokeColor = UIColor.red.cgColor
+    shapeLayer.strokeEnd = 0.0
+    shapeLayer.lineWidth = 2.0
+    shapeLayer.fillColor = nil
+    
+    let arcCenter = shapeLayer.position
+    let radius = shapeLayer.bounds.size.width / 2.0
+    let startAnigle = CGFloat(0)
+    let endAngle = CGFloat.pi * 2
+    let closewise = true
+    
+    shapeLayer.path = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: startAnigle, endAngle: endAngle, clockwise: closewise).cgPath
+    rootView.layer.addSublayer(shapeLayer)
+    shapeLayer.position = rootView.layer.position
+    
+    func executeAnimate() {
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.toValue = 1.0
+        animation.duration = 0.75
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+        animation.repeatCount = .infinity
+        animation.autoreverses = true
+        shapeLayer.add(animation, forKey: nil)
+    }
+    
+    executeAnimate()
+    
+    PlaygroundPage.current.liveView = rootView
+}
+//: 相反，从0.0到1.0的动画 `strokeStart` 通常用于“擦除”路径：
+example(CGRect.zero) { rootView in
+    
+    let shapeLayer = CAShapeLayer()
+    shapeLayer.bounds = CGRect(x: 0, y: 0, width: 120, height: 120)
+    shapeLayer.strokeColor = UIColor.red.cgColor
+    shapeLayer.strokeStart = 0.0
+    shapeLayer.strokeEnd = 1.0
+    shapeLayer.lineWidth = 2.0
+    shapeLayer.fillColor = nil
+    
+    let arcCenter = shapeLayer.position
+    let radius = shapeLayer.bounds.size.width / 2.0
+    let startAnigle = CGFloat(0)
+    let endAngle = CGFloat.pi * 2
+    let closewise = true
+    
+    let path = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: startAnigle, endAngle: endAngle, clockwise: closewise)
+    shapeLayer.path = path.cgPath
+    rootView.layer.addSublayer(shapeLayer)
+    shapeLayer.position = rootView.layer.position
+    
+    func executeAnimate() {
+        let animation = CABasicAnimation(keyPath: "strokeStart")
+        animation.toValue = 1.0
+        animation.duration = 0.75
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+        animation.repeatCount = .infinity
+        animation.autoreverses = true
+        shapeLayer.add(animation, forKey: nil)
+    }
+    
+    executeAnimate()
+    
+    PlaygroundPage.current.liveView = rootView
+}
+
+//: ## 原文链接
+//: 原文请查看[CAShapeLayer in Depth, Part II](https://www.calayer.com/core-animation/2017/12/25/cashapelayer-in-depth-part-ii.html)
