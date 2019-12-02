@@ -8,5 +8,6 @@
         <page name='CoreAnimation-CAAction'/>
         <page name='CoreAnimation-CATransaction'/>
         <page name='CAShapeLayer in Depth Part I'/>
+        <page name='CAShapeLayer in Depth Part II'/>
     </pages>
 </playground>
