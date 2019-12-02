@@ -1,10 +1,5 @@
-//: [Previous](@previous)
-
 import UIKit
 import PlaygroundSupport
-
-PlaygroundPage.current.needsIndefiniteExecution = true
-
 //: # CAShapeLayer
 //: 在 `iOS` 开发中 `CAShapeLayer` 使用相对与其它图层类来说频率较高的一个类了，使用它可以实现各种丰富的UI效果，同时 `CAShapeLayer` 的相关属性是可动画的，这为开发过程中一些视图的过渡效果提供了极大的方便，接下来我们开始介绍它。
 
@@ -21,7 +16,7 @@ example {
 //: 因为 `CAShapeLayer` 是一个矢量图层，所以我们不需要担心它的 `contentScale` 属性。无论这个值是多少，形状图层总会参照设备的主屏幕的缩放比例进行绘制。
 
 //: ### Path
-//: `CAShapeLayer` 中的 `path` 属性是它的核心所在。这个属性采用的是 `CGPath`，因此它使用与 `Core Graphics` 相同的路径逻辑.或者，你可以使用 `UIBezierPath` 创建并返回一个 `CGPath`。
+//: `CAShapeLayer` 中的 `path` 属性是它的核心所在。这个属性采用的是 `CGPath`，因此它使用与 `Core Graphics` 相同的路径逻辑。或者，你可以使用 `UIBezierPath` 创建并返回一个 `CGPath`。
 //:
 //: 但是什么是路径? 您可以将路径视为一束线段或三次贝塞尔曲线，它可以相互连接在一起或者不连接。Apple 的文档对[使用贝塞尔曲线绘制形状](https://developer.apple.com/library/archive/documentation/2DDrawing/Conceptual/DrawingPrintingiOS/BezierPaths/BezierPaths.html#//apple_ref/doc/uid/TP40010156-CH11-SW1)有很好的指导。总而言之我们可以使用它绘制简单或复杂的形状。
 //:
@@ -292,32 +287,85 @@ example(CGRect.zero) { rootView in
 //: 在示例中第一个值为 `[10, 5, 20, 5]` ，首先它会绘制10个点的长度然后空5个点的长度再绘制20个点的长度再空5个点的长度，以此为循环重复绘制得到。第二个图形亦是如此。第三第四个图形都只提供了一个值，那么它会以相同的长度绘制空白部分，例如 `lineDashPattern` 为 `[1]` 图层中，首先绘制1个点的长度再空1个点以此为循环进行绘制。
 
 //: #### lineDashPhase
-//: `lineDashPhase` 是一个偏移数值，它指定 `lineDashPattern` 中第一个值相对于开始位置的偏移出开始绘制。
-example(CGRect.zero) { rootView in
+//: `lineDashPhase` 是一个偏移数值，它指定绘制的图形整体旋转的值。例如当 `lineDashPattern` 大于0整体将逆时针旋转指定的值，小于0则顺时针旋转指定的值。
+class LineDashPhaseExample: UIView {
+    lazy var shapeLayer: CAShapeLayer = {
+       let shapeLayer = CAShapeLayer()
+       shapeLayer.bounds = CGRect(x: 0, y: 0, width: 100, height: 100)
+       shapeLayer.lineWidth = 2.0
+       shapeLayer.strokeColor = UIColor.systemPink.cgColor
+       shapeLayer.fillColor = nil
+       shapeLayer.lineDashPattern = [39.25]
+       shapeLayer.lineDashPhase = 0
+       let arcCenter = CGPoint(x: 150, y: 150)
+       let radius = shapeLayer.bounds.size.width / 2.0
+       let startAnigle = CGFloat(0)
+       let endAngle = CGFloat.pi * 2
+       let closewise = true
+
+       shapeLayer.path = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: startAnigle, endAngle: endAngle, clockwise: closewise).cgPath
+       return shapeLayer
+    }()
     
-     func shapeLayerWithLineDashPhase(lineDashPhase: CGFloat, position: CGPoint) {
+    lazy var slider: UISlider = {
+       let slider = UISlider(frame: CGRect(x: 15, y: 200, width: bounds.width - 30, height: 20))
+        slider.minimumValue = -1000.0
+        slider.maximumValue = 1000.0
+        slider.value = 0
+        slider.addTarget(self, action: #selector(sliderValueChanged(_:)), for: .valueChanged)
+        return slider
+    }()
     
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.bounds = CGRect(x: 0, y: 0, width: 100, height: 100)
-        shapeLayer.lineWidth = 2.0
-        shapeLayer.strokeColor = UIColor.systemPink.cgColor
-        shapeLayer.fillColor = nil
-        shapeLayer.lineDashPattern = [40]
-        shapeLayer.lineDashPhase = lineDashPhase
-        let arcCenter = shapeLayer.position
-        let radius = shapeLayer.bounds.size.width / 2.0
-        let startAnigle = CGFloat(0)
-        let endAngle = CGFloat.pi * 2
-        let closewise = true
-        
-        shapeLayer.path = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: startAnigle, endAngle: endAngle, clockwise: closewise).cgPath
-        shapeLayer.position = position
-        rootView.layer.addSublayer(shapeLayer)
+    override init(frame: CGRect) {
+        super.init(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
+        backgroundColor = UIColor.white
+        layer.addSublayer(shapeLayer)
+        addSubview(slider)
     }
     
-    shapeLayerWithLineDashPhase(lineDashPhase: 0, position: CGPoint(x: 120, y: 120))
-    shapeLayerWithLineDashPhase(lineDashPhase: 10, position: CGPoint(x: 250, y: 120))
-    shapeLayerWithLineDashPhase(lineDashPhase: -20, position: CGPoint(x: 120, y: 250))
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc func sliderValueChanged(_ slider: UISlider) {
+        let value = CGFloat(slider.value)
+        shapeLayer.lineDashPhase = value
+        print(value)
+    }
     
+}
+ PlaygroundPage.current.liveView = LineDashPhaseExample()
+
+//: ### Stroke
+//: 在前面示例中其实我们已经使用过描边相关的属性，这里我们进一步了解下。与描边相关的属性有 `strokeColor`，`strokeStart` 和 `strokeEnd`。
+//: #### strokeColor
+//: 很明显，之前的例子中我们都使用了 `strokeColor`，它就是为图层的描边填充上颜色。
+example(CGRect.zero) { rootView in
+    let shapeLayer = CAShapeLayer()
+    shapeLayer.bounds = CGRect(x: 0, y: 0, width: 120, height: 120)
+    shapeLayer.lineWidth = 2.0
+    shapeLayer.strokeColor = UIColor.systemTeal.cgColor
+    shapeLayer.fillColor = nil
+    shapeLayer.path = UIBezierPath(rect: shapeLayer.bounds).cgPath
+    rootView.layer.addSublayer(shapeLayer)
+    shapeLayer.position = rootView.layer.position
     PlaygroundPage.current.liveView = rootView
 }
+//: #### strokeStart 与 strokeEnd
+//: `strokeStart` 与 `strokeEnd` 的取值范围都是0.0到1.0之间。`strokeStart` 默认为0.0，`startEnd` 默认为1.0。你应该保持 `strokeEnd` 大于 `strokeStart`，否则你将看不到任何的描边颜色。
+example(CGRect.zero) { rootView in
+    let shapeLayer = CAShapeLayer()
+    shapeLayer.bounds = CGRect(x: 0, y: 0, width: 120, height: 120)
+    shapeLayer.lineWidth = 2.0
+    shapeLayer.strokeColor = UIColor.systemTeal.cgColor
+    shapeLayer.strokeStart = 0.0
+    shapeLayer.strokeEnd = 0.7
+    shapeLayer.fillColor = nil
+    shapeLayer.path = UIBezierPath(rect: shapeLayer.bounds).cgPath
+    rootView.layer.addSublayer(shapeLayer)
+    shapeLayer.position = rootView.layer.position
+    PlaygroundPage.current.liveView = rootView
+}
+
+//: ## 原文链接
+//: 原文请查看[CAShapeLayer in Depth, Part I](https://www.calayer.com/core-animation/2016/05/22/cashapelayer-in-depth.html)
