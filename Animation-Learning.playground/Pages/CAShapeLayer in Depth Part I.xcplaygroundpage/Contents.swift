@@ -368,4 +368,4 @@ example(CGRect.zero) { rootView in
 }
 
 //: ## 原文链接
-//: 原文请查看[CAShapeLayer in Depth, Part I](https://www.calayer.com/core-animation/2016/05/22/cashapelayer-in-depth.html)
+//: [CAShapeLayer in Depth, Part I](https://www.calayer.com/core-animation/2016/05/22/cashapelayer-in-depth.html)
