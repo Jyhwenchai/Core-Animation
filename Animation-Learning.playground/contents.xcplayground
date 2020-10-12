@@ -11,5 +11,6 @@
         <page name='CAShapeLayer in Depth Part II'/>
         <page name='Delaying Animation Loops'/>
         <page name='Use UIBezierPath Draw Circle Path'/>
+        <page name='CAReplicatorLayer'/>
     </pages>
 </playground>
